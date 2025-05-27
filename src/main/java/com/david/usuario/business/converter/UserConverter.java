@@ -33,6 +33,7 @@ public class UserConverter {
 
     public Address toAddress(AddressDTO addressDTO) {
         return Address.builder()
+                .id(addressDTO.getId())
                 .street(addressDTO.getStreet())
                 .number(addressDTO.getNumber())
                 .city(addressDTO.getCity())
@@ -44,6 +45,7 @@ public class UserConverter {
 
     public Phone toPhone(PhoneDTO phoneDTO) {
         return Phone.builder()
+                .id(phoneDTO.getId())
                 .ddd(phoneDTO.getDdd())
                 .number(phoneDTO.getNumber())
                 .build();
@@ -60,15 +62,16 @@ public class UserConverter {
     }
 
     public List<AddressDTO> toAddressListDTO(List<Address> address) {
-        return address.stream().map(this::toAddress).toList();
+        return address.stream().map(this::toAddressDTO).toList();
     }
 
     public List<PhoneDTO> toPhoneListDTO(List<Phone> phone) {
-        return phone.stream().map(this::toPhone).toList();
+        return phone.stream().map(this::toPhoneDTO).toList();
     }
 
-    public AddressDTO toAddress(Address address) {
+    public AddressDTO toAddressDTO(Address address) {
         return AddressDTO.builder()
+                .id(address.getId())
                 .street(address.getStreet())
                 .number(address.getNumber())
                 .city(address.getCity())
@@ -78,10 +81,42 @@ public class UserConverter {
                 .build();
     }
 
-    public PhoneDTO toPhone(Phone phone) {
+    public PhoneDTO toPhoneDTO(Phone phone) {
         return PhoneDTO.builder()
+                .id(phone.getId())
                 .ddd(phone.getDdd())
                 .number(phone.getNumber())
+                .build();
+    }
+
+    public User updateUser(UserDTO userDTO, User user) {
+        return User.builder()
+                .email(userDTO.getEmail() != null ? userDTO.getEmail() : user.getEmail())
+                .name(userDTO.getName() != null ? userDTO.getName() : user.getName())
+                .password(userDTO.getPassword() != null ? userDTO.getPassword() : user.getPassword())
+                .id(user.getId())
+                .phone(user.getPhone())
+                .address(user.getAddress())
+                .build();
+    }
+
+    public Address updateAddress(AddressDTO addressDTO, Address address) {
+        return Address.builder()
+                .id(address.getId())
+                .street(addressDTO.getStreet() != null ? addressDTO.getStreet() : address.getStreet())
+                .number(addressDTO.getNumber() != null ? addressDTO.getNumber() : address.getNumber())
+                .city(addressDTO.getCity() != null ? addressDTO.getCity() : address.getCity())
+                .cep(addressDTO.getCep() != null ? addressDTO.getCep() : address.getCep())
+                .complement(addressDTO.getComplement() != null ? addressDTO.getComplement() : address.getComplement())
+                .state(addressDTO.getState() != null ? addressDTO.getState() : address.getState())
+                .build();
+    }
+
+    public Phone updatePhone(PhoneDTO phoneDTO, Phone phone) {
+        return Phone.builder()
+                .id(phone.getId())
+                .number(phoneDTO.getNumber() != null ? phoneDTO.getNumber() : phone.getNumber())
+                .ddd(phoneDTO.getDdd() != null ? phoneDTO.getDdd() : phone.getDdd())
                 .build();
     }
 }
