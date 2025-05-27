@@ -1,7 +1,10 @@
 package com.david.usuario.controller;
 
 import com.david.usuario.business.UserService;
+import com.david.usuario.business.dto.AddressDTO;
+import com.david.usuario.business.dto.PhoneDTO;
 import com.david.usuario.business.dto.UserDTO;
+import com.david.usuario.infrastructure.entity.Phone;
 import com.david.usuario.infrastructure.entity.User;
 import com.david.usuario.infrastructure.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +36,7 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<User> findUserByEmail(@RequestParam(value = "email", required = false) String email) {
+    public ResponseEntity<UserDTO> findUserByEmail(@RequestParam(value = "email", required = false) String email) {
         return ResponseEntity.ok(userService.findUserByEmail(email));
     }
 
@@ -49,5 +52,15 @@ public class UserController {
             @RequestHeader("Authorization") String token
     ) {
         return ResponseEntity.ok(userService.updateUserData(token, userDTO));
+    }
+
+    @PutMapping("/address")
+    public ResponseEntity<AddressDTO> updateAddress(@RequestBody AddressDTO addressDTO, @RequestParam("id") Long id) {
+        return ResponseEntity.ok(userService.updateAddress(id, addressDTO));
+    }
+
+    @PutMapping("/phone")
+    public ResponseEntity<PhoneDTO> updatePhone(@RequestBody PhoneDTO phoneDTO, @RequestParam("id") Long id) {
+        return ResponseEntity.ok(userService.updatePhone(id, phoneDTO));
     }
 }
