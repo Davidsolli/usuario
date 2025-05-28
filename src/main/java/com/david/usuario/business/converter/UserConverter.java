@@ -119,4 +119,24 @@ public class UserConverter {
                 .ddd(phoneDTO.getDdd() != null ? phoneDTO.getDdd() : phone.getDdd())
                 .build();
     }
+
+    public Address toNewAddress(AddressDTO addressDTO, Long userId) {
+        return Address.builder()
+                .street(addressDTO.getStreet())
+                .city(addressDTO.getCity())
+                .cep(addressDTO.getCep())
+                .complement(addressDTO.getComplement())
+                .state(addressDTO.getState())
+                .number(addressDTO.getNumber())
+                .userId(userId)
+                .build();
+    }
+
+    public Phone toNewPhone(PhoneDTO phoneDTO, Long userId) {
+        return Phone.builder()
+                .number(phoneDTO.getNumber())
+                .ddd(phoneDTO.getDdd())
+                .userId(userId)
+                .build();
+    }
 }

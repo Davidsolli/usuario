@@ -27,5 +27,7 @@ public class Address {
     private String state;
     @Column(name = "cep", length = 9)
     private String cep;
+    @Column(name = "user_id")
+    private Long userId;
 
 }

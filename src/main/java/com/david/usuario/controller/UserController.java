@@ -4,8 +4,6 @@ import com.david.usuario.business.UserService;
 import com.david.usuario.business.dto.AddressDTO;
 import com.david.usuario.business.dto.PhoneDTO;
 import com.david.usuario.business.dto.UserDTO;
-import com.david.usuario.infrastructure.entity.Phone;
-import com.david.usuario.infrastructure.entity.User;
 import com.david.usuario.infrastructure.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -62,5 +60,21 @@ public class UserController {
     @PutMapping("/phone")
     public ResponseEntity<PhoneDTO> updatePhone(@RequestBody PhoneDTO phoneDTO, @RequestParam("id") Long id) {
         return ResponseEntity.ok(userService.updatePhone(id, phoneDTO));
+    }
+
+    @PostMapping("/address")
+    public ResponseEntity<AddressDTO> newAddress(
+            @RequestHeader("Authorization") String token,
+            @RequestBody AddressDTO addressDTO
+    ) {
+        return ResponseEntity.ok(userService.newAddress(token, addressDTO));
+    }
+
+    @PostMapping("/phone")
+    public ResponseEntity<PhoneDTO> newPhone(
+            @RequestHeader("Authorization") String token,
+            @RequestBody PhoneDTO phoneDTO
+    ) {
+        return ResponseEntity.ok(userService.newPhone(token, phoneDTO));
     }
 }
