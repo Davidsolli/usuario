@@ -89,4 +89,22 @@ public class UserService {
         Phone updatedPhone = userConverter.updatePhone(phoneDTO, phone);
         return userConverter.toPhoneDTO(phoneRepository.save(updatedPhone));
     }
+
+    public AddressDTO newAddress(String token, AddressDTO addressDTO) {
+        String email = jwtUtil.extractUsername(token.substring(7));
+        User user = userRepository
+                .findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Email não encontrado!"));
+        Address address = userConverter.toNewAddress(addressDTO, user.getId());
+        return userConverter.toAddressDTO(addressRepository.save(address));
+    }
+
+    public PhoneDTO newPhone(String token, PhoneDTO phoneDTO) {
+        String email = jwtUtil.extractUsername(token.substring(7));
+        User user = userRepository
+                .findByEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("Email não encontrado!"));
+        Phone phone = userConverter.toNewPhone(phoneDTO, user.getId());
+        return userConverter.toPhoneDTO(phoneRepository.save(phone));
+    }
 }
