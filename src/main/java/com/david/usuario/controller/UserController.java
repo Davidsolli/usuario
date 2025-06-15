@@ -1,9 +1,11 @@
 package com.david.usuario.controller;
 
 import com.david.usuario.business.UserService;
+import com.david.usuario.business.ViaCepService;
 import com.david.usuario.business.dto.AddressDTO;
 import com.david.usuario.business.dto.PhoneDTO;
 import com.david.usuario.business.dto.UserDTO;
+import com.david.usuario.business.dto.ViaCepDTO;
 import com.david.usuario.infrastructure.security.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +22,7 @@ public class UserController {
     private final UserService userService;
     private final AuthenticationManager authenticationManager;
     private final JwtUtil jwtUtil;
+    private final ViaCepService viaCepService;
 
     @PostMapping
     public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
@@ -77,4 +80,10 @@ public class UserController {
     ) {
         return ResponseEntity.ok(userService.newPhone(token, phoneDTO));
     }
+
+    @GetMapping("/address/{cep}")
+    public ResponseEntity<ViaCepDTO> findAddressData(@PathVariable("cep") String cep) {
+        return ResponseEntity.ok(viaCepService.findAddressData(cep));
+    }
+
 }
